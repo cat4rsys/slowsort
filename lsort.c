@@ -44,6 +44,7 @@ int print_list(elem* e) {
 void free_list(elem* e) {
 	if ( e ) {
 		elem* next = e->next;
+		free(e->a);
 		free(e);
 		free_list(next);
 	}
@@ -54,15 +55,11 @@ int main() {
 	elem* list = NULL;
 	elem* result = NULL;
 	char * buf = calloc(100, 1);
-	fgets(buf, 50, stdin);
-	while (feof(stdin) == 0) {
+	while (fgets(buf, 100, stdin) != NULL) {
+		x = strdup(buf);
 		elem* n = malloc(sizeof(elem));
-		if (feof(stdin) == 0) {
-			x = strdup(buf);
-		}
 		*n = (elem){x, list};
 		list = n;
-		fgets(buf, 50, stdin);
 	}
 	printf("List:\n");
 	print_list(list);
